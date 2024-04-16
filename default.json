@@ -7,12 +7,12 @@
     ":automergePatch",
     ":automergePr",
     ":disableDependencyDashboard",
-    ":disableRateLimiting",
     ":enableVulnerabilityAlertsWithLabel('security')",
     ":labels(dependencies)",
     ":rebaseStalePrs",
     ":timezone(Asia/Kolkata)",
     "group:recommended",
+    ":prHourlyLimit4",
     "helpers:pinGitHubActionDigestsToSemver",
     "schedule:automergeNonOfficeHours"
   ],
