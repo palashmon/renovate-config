@@ -1,23 +1,40 @@
 {
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": [
-		"config:best-practices",
-		":automergeDigest",
-		":automergeMinor",
-		":automergePatch",
-		":automergePr",
-		":disableDependencyDashboard",
-		":enableVulnerabilityAlertsWithLabel('security')",
-		":labels(dependencies)",
-		":rebaseStalePrs",
-		":timezone(Asia/Kolkata)",
-		"group:recommended"
-	],
-	"rebaseWhen": "conflicted",
-	"branchPrefix": "renovate/",
-	"platformAutomerge": true,
-	"rangeStrategy": "bump",
-	"major": {
-		"enabled": false
-	}
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    ":automergeDigest",
+    ":automergeMinor",
+    ":automergePatch",
+    ":automergePr",
+    ":disableDependencyDashboard",
+    ":disableRateLimiting",
+    ":enableVulnerabilityAlertsWithLabel('security')",
+    ":labels(dependencies)",
+    ":rebaseStalePrs",
+    ":timezone(Asia/Kolkata)",
+    "group:recommended",
+    "helpers:pinGitHubActionDigestsToSemver",
+    "schedule:automergeNonOfficeHours"
+  ],
+  "rebaseWhen": "conflicted",
+  "branchPrefix": "renovate/",
+  "platformAutomerge": true,
+  "rangeStrategy": "bump",
+  "major": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "updateTypes": ["major"],
+      "addLabels": ["semver major", "dependencies"]
+    },
+    {
+      "updateTypes": ["minor"],
+      "addLabels": ["semver minor", "dependencies"]
+    },
+    {
+      "updateTypes": ["patch", "digest", "bump"],
+      "addLabels": ["semver patch", "dependencies"]
+    }
+  ]
 }
