@@ -2,14 +2,16 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": [
 		"config:best-practices",
-		":automergeMinor",
-		":automergePr",
 		":automergeDigest",
+		":automergeMinor",
+		":automergePatch",
+		":automergePr",
+		":disableDependencyDashboard",
+		":enableVulnerabilityAlertsWithLabel('security')",
 		":labels(dependencies)",
 		":rebaseStalePrs",
-		":enableVulnerabilityAlerts",
-		":disableDependencyDashboard",
-		":timezone(Asia/Kolkata)"
+		":timezone(Asia/Kolkata)",
+		"group:recommended"
 	],
 	"rebaseWhen": "conflicted",
 	"branchPrefix": "renovate/",
@@ -17,17 +19,5 @@
 	"rangeStrategy": "bump",
 	"major": {
 		"enabled": false
-	},
-	"packageRules": [
-		{
-			"description": "Automerge non-major updates",
-			"matchUpdateTypes": [
-				"minor",
-				"patch",
-				"pin",
-				"digest"
-			],
-			"automerge": true
-		}
-	]
+	}
 }
