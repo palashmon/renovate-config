@@ -2,9 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:best-practices",
-    ":automergeDigest",
-    ":automergeMinor",
-    ":automergePatch",
+    ":automergeAll",
     ":automergePr",
     ":disableDependencyDashboard",
     ":enableVulnerabilityAlerts",
@@ -14,12 +12,12 @@
     ":semanticCommitTypeAll(chore)",
     ":timezone(Asia/Kolkata)",
     "group:allNonMajor",
-    "helpers:pinGitHubActionDigests",
-    "schedule:automergeNonOfficeHours"
+    "helpers:pinGitHubActionDigests"
   ],
   "rebaseWhen": "conflicted",
   "branchPrefix": "renovate/",
   "platformAutomerge": true,
+	"automergeStrategy": "squash",
   "rangeStrategy": "bump",
   "major": {
     "enabled": false
