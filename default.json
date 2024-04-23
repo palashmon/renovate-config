@@ -12,12 +12,12 @@
     ":semanticCommitTypeAll(chore)",
     ":timezone(Asia/Kolkata)",
     "group:allNonMajor",
-    "helpers:pinGitHubActionDigests"
+    "helpers:pinGitHubActionDigestsToSemver"
   ],
   "rebaseWhen": "conflicted",
   "branchPrefix": "renovate/",
   "platformAutomerge": true,
-	"automergeStrategy": "squash",
+  "automergeStrategy": "squash",
   "rangeStrategy": "bump",
   "major": {
     "enabled": false
