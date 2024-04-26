@@ -12,7 +12,9 @@
     ":semanticCommitTypeAll(chore)",
     ":timezone(Asia/Kolkata)",
     "group:allNonMajor",
-		"npm:unpublishSafe",
+    "npm:unpublishSafe",
+    "schedule:weekly",
+    "schedule:automergeWeekly",
     "helpers:pinGitHubActionDigestsToSemver"
   ],
   "rebaseWhen": "conflicted",
