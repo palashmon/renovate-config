@@ -13,8 +13,8 @@
     ":timezone(Asia/Kolkata)",
     "group:allNonMajor",
     "npm:unpublishSafe",
-    "schedule:weekly",
-    "schedule:automergeWeekly",
+    "schedule:daily",
+    "schedule:automergeDaily",
     "helpers:pinGitHubActionDigestsToSemver"
   ],
   "rebaseWhen": "conflicted",
