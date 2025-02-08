@@ -18,6 +18,7 @@
     ":updateNotScheduled",
     "workarounds:typesNodeVersioning",
     ":disablePeerDependencies",
+		":disableDependencyDashboard",
     "schedule:automergeDaily"
   ],
   "rebaseWhen": "conflicted",
