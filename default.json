@@ -1,42 +1,226 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:best-practices",
-    ":automergeAll",
-    ":automergePr",
-    ":disableDependencyDashboard",
-    ":enableVulnerabilityAlerts",
-    ":labels(dependencies)",
+    "config:recommended",
+    ":autodetectPinVersions",
+    ":automergePatch",
+    ":label(dependencies)",
+    ":prConcurrentLimitNone",
+    ":prHourlyLimitNone",
+    ":prImmediately",
     ":rebaseStalePrs",
-    ":semanticCommits",
-    ":semanticCommitTypeAll(chore)",
+    ":separatePatchReleases",
     ":timezone(Asia/Kolkata)",
-    "group:allNonMajor",
+    "helpers:disableTypesNodeMajor",
+    "helpers:pinGitHubActionDigests",
     "npm:unpublishSafe",
-    "schedule:daily",
-    "schedule:automergeDaily",
-    "helpers:pinGitHubActionDigestsToSemver"
+    ":semanticCommits",
+    ":updateNotScheduled",
+    "workarounds:typesNodeVersioning",
+    ":disablePeerDependencies",
+    "schedule:automergeDaily"
   ],
   "rebaseWhen": "conflicted",
-  "branchPrefix": "renovate/",
-  "platformAutomerge": true,
-  "automergeStrategy": "squash",
+  "labels": [
+    "dependencies"
+  ],
   "rangeStrategy": "bump",
+  "postUpdateOptions": [
+    "npmDedupe",
+    "pnpmDedupe",
+    "yarnDedupeFewer"
+  ],
+  "transitiveRemediation": true,
+  "separateMajorMinor": true,
+  "automergeStrategy": "squash",
+  "ignorePaths": [
+    "**/node_modules/**"
+  ],
+  "vulnerabilityAlerts": {
+    "commitMessagePrefix": "chore(renovate): Security update",
+    "labels": [
+      "security"
+    ]
+  },
+  "platform": "github",
+  "onboarding": false,
+  "requireConfig": "ignored",
   "major": {
     "enabled": false
   },
   "packageRules": [
     {
-      "updateTypes": ["major"],
-      "addLabels": ["semver major", "dependencies"]
+      "description": "Group minor updates together",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "addLabels": [
+        "minor"
+      ],
+      "commitMessagePrefix": "fix(renovate):",
+      "groupName": "minor"
     },
     {
-      "updateTypes": ["minor"],
-      "addLabels": ["semver minor", "dependencies"]
+      "description": "Group patch updates together and automerge if tests pass",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "addLabels": [
+        "patch"
+      ],
+      "commitMessagePrefix": "fix(renovate):",
+      "groupName": "patch",
+      "automerge": true
     },
     {
-      "updateTypes": ["patch", "digest", "bump"],
-      "addLabels": ["semver patch", "dependencies"]
+      "description": "Group pin updates together and automerge if tests pass",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "pin",
+        "digest"
+      ],
+      "addLabels": [
+        "pin"
+      ],
+      "commitMessagePrefix": "fix(renovate): pin",
+      "groupName": "pin",
+      "automerge": true
+    },
+    {
+      "description": "Automerge any updates to types",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "addLabels": [
+        "minor"
+      ],
+      "matchPackagePatterns": [
+        "^@types/"
+      ],
+      "groupName": "minor-types",
+      "commitMessagePrefix": "fix(renovate): @types",
+      "automerge": true
+    },
+    {
+      "description": "Automerge any updates to linting or prettier",
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchPackagePatterns": [
+        "lint",
+        "prettier"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "Automerge Github Actions updates",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    },
+    {
+      "matchManagers": "github-actions",
+      "separateMultipleMajor": true,
+      "groupName": "github-actions"
+    },
+    {
+      "matchDepNames": [
+        "node"
+      ],
+      "matchPackagePatterns": [
+        "/node$"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "major"
+      ],
+      "groupName": "node major"
+    },
+    {
+      "matchDepNames": [
+        "npm"
+      ],
+      "matchPackagePatterns": [
+        "/npm$"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "major"
+      ],
+      "groupName": "npm major"
+    },
+    {
+      "matchDepNames": [
+        "typescript"
+      ],
+      "matchPackagePatterns": [
+        "^typescript$"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "Typescript major"
+    },
+    {
+      "description": "Do not update eslint major versions. v9 is breaking change",
+      "matchPackagePatterns": [
+        "^eslint$"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "eslint"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Vitest does not follow semver, minor changes are breaking changes",
+      "matchDepNames": [
+        "vitest"
+      ],
+      "matchPackagePatterns": [
+        "^vitest$"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "major"
+      ],
+      "addLabels": [
+        "vitest"
+      ],
+      "groupName": "vitest"
+    },
+    {
+      "description": "Do not update react major if it is 18",
+      "matchPackagePatterns": [
+        "^react$",
+        "^react-dom$",
+        "^@types/react$",
+        "^@types/react-dom$"
+      ],
+      "matchCurrentVersion": "^18.0.0",
+      "allowedVersions": "^18.0.0"
     }
   ]
 }
