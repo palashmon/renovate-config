@@ -18,13 +18,11 @@
     ":updateNotScheduled",
     "workarounds:typesNodeVersioning",
     ":disablePeerDependencies",
-		":disableDependencyDashboard",
+    ":disableDependencyDashboard",
     "schedule:automergeDaily"
   ],
   "rebaseWhen": "conflicted",
-  "labels": [
-    "dependencies"
-  ],
+  "labels": ["dependencies"],
   "rangeStrategy": "bump",
   "postUpdateOptions": [
     "npmDedupe",
@@ -38,101 +36,60 @@
     "**/node_modules/**"
   ],
   "vulnerabilityAlerts": {
-    "commitMessagePrefix": "chore(renovate): Security update",
-    "labels": [
-      "security"
-    ]
+    "commitMessagePrefix": "chore(renovate): security update",
+    "labels": ["security"]
   },
   "platform": "github",
   "onboarding": false,
   "requireConfig": "ignored",
+  "commitMessageLowerCase": "auto",
   "major": {
     "enabled": false
   },
   "packageRules": [
     {
-      "description": "Group minor updates together",
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "addLabels": [
-        "minor"
-      ],
-      "commitMessagePrefix": "fix(renovate):",
-      "groupName": "minor"
+      "description": "[DEV] Group minor & patch updates together and auto-merge if tests pass",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "minor & patch dev dependencies",
+      "groupSlug": "dev-deps-minor",
+      "semanticCommitScope": "dev-deps",
+      "automerge": true
     },
     {
-      "description": "Group patch updates together and automerge if tests pass",
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
-      "addLabels": [
-        "patch"
-      ],
-      "commitMessagePrefix": "fix(renovate):",
-      "groupName": "patch",
+      "description": "Group minor & patch updates together and auto-merge if tests pass",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "matchDepTypes": ["dependencies"],
+      "groupName": "minor & patch dependencies",
+      "groupSlug": "deps-minor",
+      "semanticCommitScope": "deps",
       "automerge": true
     },
     {
       "description": "Group pin updates together and automerge if tests pass",
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "matchUpdateTypes": [
-        "pin",
-        "digest"
-      ],
-      "addLabels": [
-        "pin"
-      ],
-      "commitMessagePrefix": "fix(renovate): pin",
-      "groupName": "pin",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["pin", "digest"],
+      "groupName": "pin-deps",
+      "semanticCommitScope": "deps",
       "automerge": true
     },
     {
       "description": "Automerge any updates to types",
-      "matchManagers": [
-        "npm"
-      ],
-      "matchUpdateTypes": [
-        "minor"
-      ],
-      "addLabels": [
-        "minor"
-      ],
-      "matchPackagePatterns": [
-        "^@types/"
-      ],
-      "groupName": "minor-types",
-      "commitMessagePrefix": "fix(renovate): @types",
-      "automerge": true
-    },
-    {
-      "description": "Automerge any updates to linting or prettier",
-      "matchDepTypes": [
-        "devDependencies"
-      ],
-      "matchPackagePatterns": [
-        "lint",
-        "prettier"
-      ],
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "matchPackagePatterns": ["^@types/"],
+      "groupName": "minor-types", 
+      "semanticCommitScope": "types",      
       "automerge": true
     },
     {
       "description": "Automerge Github Actions updates",
-      "matchManagers": [
-        "github-actions"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "github-actions", 
+      "semanticCommitScope": "actions",  
       "automerge": true
     },
     {
@@ -141,76 +98,10 @@
       "groupName": "github-actions"
     },
     {
-      "matchDepNames": [
-        "node"
-      ],
-      "matchPackagePatterns": [
-        "/node$"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "addLabels": [
-        "major"
-      ],
+      "matchDepNames": ["node"],
+      "matchPackagePatterns": ["/node$"],
+      "matchUpdateTypes": ["major"],
       "groupName": "node major"
-    },
-    {
-      "matchDepNames": [
-        "npm"
-      ],
-      "matchPackagePatterns": [
-        "/npm$"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "addLabels": [
-        "major"
-      ],
-      "groupName": "npm major"
-    },
-    {
-      "matchDepNames": [
-        "typescript"
-      ],
-      "matchPackagePatterns": [
-        "^typescript$"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "groupName": "Typescript major"
-    },
-    {
-      "description": "Do not update eslint major versions. v9 is breaking change",
-      "matchPackagePatterns": [
-        "^eslint$"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "addLabels": [
-        "eslint"
-      ],
-      "enabled": false
-    },
-    {
-      "description": "Vitest does not follow semver, minor changes are breaking changes",
-      "matchDepNames": [
-        "vitest"
-      ],
-      "matchPackagePatterns": [
-        "^vitest$"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "major"
-      ],
-      "addLabels": [
-        "vitest"
-      ],
-      "groupName": "vitest"
     },
     {
       "description": "Do not update react major if it is 18",
