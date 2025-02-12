@@ -43,6 +43,7 @@
   "onboarding": false,
   "requireConfig": "ignored",
   "commitMessageLowerCase": "auto",
+	"minimumReleaseAge": "21 days",
   "major": {
     "enabled": false
   },
