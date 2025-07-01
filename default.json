@@ -43,27 +43,27 @@
   "onboarding": false,
   "requireConfig": "ignored",
   "commitMessageLowerCase": "auto",
-	"minimumReleaseAge": "21 days",
+  "minimumReleaseAge": "31 days",
   "major": {
     "enabled": false
   },
   "packageRules": [
     {
-      "description": "[DEV] Group minor & patch updates together and auto-merge if tests pass",
+      "description": "[DEV] Group minor updates together and auto-merge if tests pass",
       "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["patch", "minor"],
+      "matchUpdateTypes": ["minor"],
       "matchDepTypes": ["devDependencies"],
-      "groupName": "minor & patch dev dependencies",
+      "groupName": "minor dev dependencies",
       "groupSlug": "dev-deps-minor",
       "semanticCommitScope": "dev-deps",
       "automerge": true
     },
     {
-      "description": "Group minor & patch updates together and auto-merge if tests pass",
+      "description": "Group minor updates together and auto-merge if tests pass",
       "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["patch", "minor"],
+      "matchUpdateTypes": ["minor"],
       "matchDepTypes": ["dependencies"],
-      "groupName": "minor & patch dependencies",
+      "groupName": "minor dependencies",
       "groupSlug": "deps-minor",
       "semanticCommitScope": "deps",
       "automerge": true
@@ -79,7 +79,7 @@
     {
       "description": "Automerge any updates to types",
       "matchManagers": ["npm"],
-      "matchUpdateTypes": ["patch", "minor"],
+      "matchUpdateTypes": ["minor"],
       "matchPackagePatterns": ["^@types/"],
       "groupName": "minor-types", 
       "semanticCommitScope": "types",      
@@ -88,7 +88,7 @@
     {
       "description": "Automerge Github Actions updates",
       "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["minor"],
       "groupName": "github-actions", 
       "semanticCommitScope": "actions",  
       "automerge": true
@@ -105,7 +105,7 @@
       "groupName": "node major"
     },
     {
-      "description": "Do not update react major if it is 18",
+      "description": "Do not update React major if it is 18",
       "matchPackagePatterns": [
         "^react$",
         "^react-dom$",
