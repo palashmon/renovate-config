@@ -3,13 +3,11 @@
   "extends": [
     "config:recommended",
     ":autodetectPinVersions",
-    ":automergePatch",
     ":label(dependencies)",
     ":prConcurrentLimitNone",
     ":prHourlyLimitNone",
     ":prImmediately",
     ":rebaseStalePrs",
-    ":separatePatchReleases",
     ":timezone(Asia/Kolkata)",
     "helpers:disableTypesNodeMajor",
     "helpers:pinGitHubActionDigests",
@@ -45,6 +43,9 @@
   "commitMessageLowerCase": "auto",
   "minimumReleaseAge": "31 days",
   "major": {
+    "enabled": false
+  },
+  "patch": {
     "enabled": false
   },
   "packageRules": [
